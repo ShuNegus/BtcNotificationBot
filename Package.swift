@@ -6,11 +6,11 @@ import PackageDescription
 let package = Package(
     name: "BtcNotificationBot",
     dependencies: [
-        .Package(url: "https://github.com/zmeyc/telegram-bot-swift.git", majorVersion: 0)
+        .package(url: "https://github.com/zmeyc/telegram-bot-swift.git", .upToNextMajor(from: "0.0.0"))
     ],
     targets: [
         .target(
             name: "BtcNotificationBot",
-            dependencies: []),
+            dependencies: ["telegram-bot-swift"]),
     ]
 )
