@@ -85,6 +85,11 @@ extension String {
 /// Setting up the POST request with Telegram secret key.
 /// With a secret path to be sure that nobody else knows that URL.
 /// https://core.telegram.org/bots/api#setwebhook
+
+droplet.get("info") { _ in
+    return "SwiftyBot did start"
+}
+
 droplet.post("telegram", telegramSecret) { request in
     
     print("request \(request)")
