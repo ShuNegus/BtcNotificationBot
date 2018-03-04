@@ -90,7 +90,7 @@ droplet.get("info") { _ in
     return "SwiftyBot did start"
 }
 
-droplet.post(telegramSecret) { request in
+droplet.post("telegram", telegramSecret) { request in
     
     print("request \(request)")
     
