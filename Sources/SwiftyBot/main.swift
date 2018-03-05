@@ -110,10 +110,8 @@ droplet.post("telegram", telegramSecret) { request in
                     "chat_id": chatID,
                     "text": "response"
                     ]).formURLEncoded())
-                DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
-                    let log = try! droplet.client.post("https://api.telegram.org/bot547106684:AAH1Izf8ZwxZ5uw7Bw4iHU9frxC1jwN5fgs/sendMessage", query: [:], ["Content-Type": "application/json"], body, through: [])
-                    print("log \(log)")
-                })
+                let log = try! droplet.client.post("https://api.telegram.org/bot547106684:AAH1Izf8ZwxZ5uw7Bw4iHU9frxC1jwN5fgs/sendMessage", query: [:], ["Content-Type": "application/json"], body, through: [])
+                print("log \(log)")
                 
             /// Command not valid.
             default:
