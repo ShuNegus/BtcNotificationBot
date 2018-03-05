@@ -80,6 +80,10 @@ extension String {
     }
 }
 
+droplet.get("info") { _ in
+  return "SwiftyBot start"
+}
+
 // MARK: - Telegram bot
 
 /// Setting up the POST request with Telegram secret key.
