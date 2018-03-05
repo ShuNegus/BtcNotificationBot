@@ -105,14 +105,17 @@ droplet.post("telegram", telegramSecret) { request in
                            "Any text - Returns the reversed message"
             case "/after":
                 response = "DispatchQueue.main.asyncAfter"
-                let body = try! JSON(node: [
-                    "method": "sendMessage",
-                    "chat_id": chatID,
-                    "text": response
-                ]).makeBody()
                 
-                let log = try! droplet.client.post("https://api.telegram.org/bot547106684:AAH1Izf8ZwxZ5uw7Bw4iHU9frxC1jwN5fgs/sendMessage", query: [:], ["Content-Type": "application/json"], body, through: [])
-                print("log \(log)")
+                DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 5, execute: {
+                    let body = try! JSON(node: [
+                        "method": "sendMessage",
+                        "chat_id": chatID,
+                        "text": "response"
+                        ]).makeBody()
+                    
+                    let log = try! droplet.client.post("https://api.telegram.org/bot547106684:AAH1Izf8ZwxZ5uw7Bw4iHU9frxC1jwN5fgs/sendMessage", query: [:], ["Content-Type": "application/json"], body, through: [])
+                    print("log \(log)")
+                })
                 
             /// Command not valid.
             default:
