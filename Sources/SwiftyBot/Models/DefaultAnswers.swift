@@ -14,8 +14,8 @@ struct DefaultAnswers {
     }
     
     func helpAnswers() -> String {
-        return TelegramCommand.start.commandDescription + "/n" +
-                TelegramCommand.help.commandDescription + "/n" +
+        return TelegramCommand.start.commandDescription + "\n" +
+                TelegramCommand.help.commandDescription + "\n" +
                 TelegramCommand.observe(duration: 0, procent: 0).commandDescription
     }
     
