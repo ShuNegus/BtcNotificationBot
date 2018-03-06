@@ -71,6 +71,8 @@ droplet.get("info") { _ in
 droplet.post("telegram", telegramSecret) { request in
     /// Let's prepare the response message text.
     var response: String = ""
+    
+    print("request \(request)")
 
     /// Chat ID from request JSON.
     let chatID: Int = request.data["message", "chat", "id"]?.int ?? 0
@@ -142,3 +144,16 @@ droplet.post("telegram", telegramSecret) { request in
 
 /// Run the Droplet.
 try droplet.run()
+
+
+
+
+
+
+
+
+
+
+struct TelegramUser {
+    
+}
