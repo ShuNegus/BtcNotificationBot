@@ -41,7 +41,7 @@ enum TelegramCommand {
         case .start:
             return "/start - Инициализирует бота"
         case .help:
-            return "/help - Информацияо том как работать с ботом"
+            return "/help - Информация о том как работать с ботом"
         case .observe:
             return "/observe duration procent - Начать наблюдать за биржей duration минут\n" +
                    "уведомить при падении на procent процентов любой монеты"

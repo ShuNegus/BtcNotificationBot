@@ -55,9 +55,12 @@ droplet.post("telegram", telegramSecret) { request in
         let message = request.data["message", "text"]?.string,
         let command = TelegramCommand(rawValue: message)
         else {
-            TelegramMethods().sendMessage(DefaultAnswers().helpAnswers(), to: chatId)
             droplet.console.error("Empty message in request")
-            throw BotError.missingPayload
+            return try JSON(node: [
+                "method": "sendMessage",
+                "chat_id": chatId,
+                "text": DefaultAnswers().helpAnswers()
+                ])
     }
     
     let userFirstName = request.data["message", "from", "first_name"]?.string ?? "Incognito"
