@@ -18,6 +18,7 @@ class ObserverBTCImpl: ObserverBTC {
     var procent: Int
     
     var startTickers: [TickerItem]?
+    var symbolsNotified: [String] = []
     
     init(telegramUser: TelegramUser, procent: Int) {
         self.telegramUser = telegramUser
@@ -27,7 +28,6 @@ class ObserverBTCImpl: ObserverBTC {
     // MARK: - ObserverBTC
     
     func tickersChanged(_ tickers: [TickerItem]) {
-        print("func tickersChanged()")
         let tickers = tickers.filter({ $0.symbol.contains("BTC") })
         if let startTickers = self.startTickers {
             compareStartTickers(startTickers, with: tickers)
@@ -41,10 +41,10 @@ class ObserverBTCImpl: ObserverBTC {
     }
     
     private func compareStartTickers(_ startTickers: [TickerItem], with tickers: [TickerItem]) {
-        print("func compareStartTickers()")
         startTickers.forEach() { [weak self] oldTicker in
             guard
                 let `self` = self,
+                !symbolsNotified.contains(oldTicker.symbol),
                 let ticker = tickers.filter({ $0 == oldTicker }).first else {
                 return
             }
@@ -52,8 +52,10 @@ class ObserverBTCImpl: ObserverBTC {
             let changeProcent = ticker.priceChangePercent - oldTicker.priceChangePercent
             if self.procent > 0, changeProcent >= Double(self.procent) {
                 TelegramMethods().sendMessage("Монетка \(ticker.symbol) поднялась на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%", to: self.telegramUser.chatId)
+                symbolsNotified.append(ticker.symbol)
             } else if self.procent < 0, -changeProcent <= Double(self.procent) {
                 TelegramMethods().sendMessage("Монетка \(ticker.symbol) упала на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%", to: self.telegramUser.chatId)
+                symbolsNotified.append(ticker.symbol)
             }
         }
     }
