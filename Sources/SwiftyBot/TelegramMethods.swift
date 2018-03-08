@@ -20,11 +20,10 @@ class TelegramMethods {
             droplet.console.error("Add almost one in Config/secrets/app.json")
             return
         }
-        let commandUrl = baseTelegramApiUrl + "/" + telegramSecret + "/sendMessage"
+        let commandUrl = baseTelegramApiUrl + "/bot" + telegramSecret + "/sendMessage"
         
         do {
             let body = try JSON(node: [
-                "method": "sendMessage",
                 "chat_id": chatId,
                 "text": message
                 ]).makeBody()
