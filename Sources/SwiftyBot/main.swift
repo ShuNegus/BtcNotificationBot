@@ -75,7 +75,6 @@ droplet.post("telegram", telegramSecret) { request in
     case .help:
         answer = DefaultAnswers().helpAnswers()
     case .observe(let duration, let procent):
-        TelegramMethods.shared.sendMessage("Перестал следить. Сокеты сломались 😱.\nНужно перезапустить сервер.", to: chatId)
         answer = DefaultAnswers().startObserveAnswers(duration: duration, procent: procent)
         let telegramUser = TelegramUser(id: request.data["message", "from", "id"]?.int,
                                         chatId: chatId,
@@ -88,8 +87,7 @@ droplet.post("telegram", telegramSecret) { request in
         DispatchQueue
             .global(qos: .background)
             .asyncAfter(deadline: .now() + Double(duration * 60)) {
-                print("Перестал следить. Время наблюдения вышло.")
-                TelegramMethods.shared.sendMessage("Перестал следить. Время наблюдения вышло.", to: observerBTC.telegramUser.chatId)
+                TelegramMethods().sendMessage("Перестал следить. Время наблюдения вышло.", to: observerBTC.telegramUser.chatId)
                 socketBTC.observers.remove(observerBTC)
         }
     }

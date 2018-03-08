@@ -37,7 +37,7 @@ class ObserverBTCImpl: ObserverBTC {
     }
     
     func socketClose() {
-        TelegramMethods.shared.sendMessage("Перестал следить. Сокеты сломались 😱.\nНужно перезапустить сервер.", to: telegramUser.chatId)
+        TelegramMethods().sendMessage("Перестал следить. Сокеты сломались 😱.\nНужно перезапустить сервер.", to: telegramUser.chatId)
     }
     
     private func compareStartTickers(_ startTickers: [TickerItem], with tickers: [TickerItem]) {
@@ -51,11 +51,9 @@ class ObserverBTCImpl: ObserverBTC {
 
             let changeProcent = ticker.priceChangePercent - oldTicker.priceChangePercent
             if self.procent > 0, changeProcent >= Double(self.procent) {
-                print("Монетка \(ticker.symbol) поднялась на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%")
-                TelegramMethods.shared.sendMessage("Монетка \(ticker.symbol) поднялась на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%", to: self.telegramUser.chatId)
+                TelegramMethods().sendMessage("Монетка \(ticker.symbol) поднялась на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%", to: self.telegramUser.chatId)
             } else if self.procent < 0, -changeProcent <= Double(self.procent) {
-                print("Монетка \(ticker.symbol) упала на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%")
-                TelegramMethods.shared.sendMessage("Монетка \(ticker.symbol) упала на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%", to: self.telegramUser.chatId)
+                TelegramMethods().sendMessage("Монетка \(ticker.symbol) упала на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%", to: self.telegramUser.chatId)
             }
         }
     }
