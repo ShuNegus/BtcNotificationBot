@@ -24,8 +24,9 @@ class TelegramMethods {
         
         do {
             let body = try JSON(node: [
+                "method": "sendMessage",
                 "chat_id": chatId,
-                "text": "response"
+                "text": answer
                 ]).makeBody()
             
             _ = try droplet.client.post(commandUrl, query: [:], ["Content-Type": "application/json"], body, through: [])
