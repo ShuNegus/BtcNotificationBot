@@ -20,9 +20,10 @@ struct DefaultAnswers {
     }
     
     func startObserveAnswers(duration: Int, procent: Int) -> String {
-        return """
+        return
+"""
 Буду следить за курсом в течении \(duration) минут.
-Сообщу если курс любой монетки изменится на \(procent)%
+Сообщу если курс любой монетки \(procent > 0 ? "увеличится" : "уменьшится") на \(abs(procent))%
 """
     }
     
