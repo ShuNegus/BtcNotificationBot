@@ -88,7 +88,7 @@ droplet.post("telegram", telegramSecret) { request in
             .global(qos: .background)
             .asyncAfter(deadline: .now() + Double(duration * 60)) {
                 print("Перестал следить. Время наблюдения вышло.")
-                TelegramMethods().sendMessage("Перестал следить. Время наблюдения вышло.", to: observerBTC.telegramUser.chatId)
+                TelegramMethods.shared.sendMessage("Перестал следить. Время наблюдения вышло.", to: observerBTC.telegramUser.chatId)
                 socketBTC.observers.remove(observerBTC)
         }
     }
