@@ -9,9 +9,7 @@ import Vapor
 import HTTP
 
 class TelegramMethods {
-    
-    static let shared = TelegramMethods()
-    
+        
     var baseTelegramApiUrl = "https://api.telegram.org"
     
     func sendMessage(_ message: String, to chatId: Int) {
