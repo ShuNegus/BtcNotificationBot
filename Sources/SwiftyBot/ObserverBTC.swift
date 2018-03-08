@@ -49,7 +49,7 @@ class ObserverBTCImpl: ObserverBTC {
 
             let changeProcent = ticker.priceChangePercent - oldTicker.priceChangePercent
             if self.procent > 0, changeProcent >= Double(self.procent) {
-                TelegramMethods().sendMessage("Монетка \(ticker.symbol) поднялась на \(changeProcent)%", to: self.telegramUser.chatId)
+                TelegramMethods().sendMessage("Монетка \(ticker.symbol) поднялась на \(changeProcent)%\nБыло \(oldTicker.priceChangePercent)% стало \(ticker.priceChangePercent)%", to: self.telegramUser.chatId)
             } else if self.procent < 0, -changeProcent <= Double(self.procent) {
                 TelegramMethods().sendMessage("Монетка \(ticker.symbol) упала на \(changeProcent)%", to: self.telegramUser.chatId)
             }

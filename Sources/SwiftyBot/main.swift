@@ -87,6 +87,7 @@ droplet.post("telegram", telegramSecret) { request in
         DispatchQueue
             .global(qos: .background)
             .asyncAfter(deadline: .now() + Double(duration * 60)) {
+            TelegramMethods().sendMessage("Перестал следить. Время наблюдения вышло.", to: observerBTC.telegramUser.chatId)
             socketBTC.observers.remove(observerBTC)
         }
     }
@@ -99,7 +100,10 @@ droplet.post("telegram", telegramSecret) { request in
     
 }
 
-try socketBTC.run()
+DispatchQueue.global(qos: .background).async {
+    try? socketBTC.run()
+}
+
 try droplet.run()
 
 
