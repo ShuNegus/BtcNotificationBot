@@ -30,7 +30,9 @@ import HTTP
 import BFKit
 import Dispatch
 
+
 let droplet: Droplet = try Droplet()
+let socketBTC: SocketBTC = SocketBTC()
 
 guard let telegramSecret = droplet.config["app", "telegram", "secret"]?.string else {
     droplet.console.error("Missing secret or token keys!")
@@ -74,6 +76,19 @@ droplet.post("telegram", telegramSecret) { request in
         answer = DefaultAnswers().helpAnswers()
     case .observe(let duration, let procent):
         answer = DefaultAnswers().startObserveAnswers(duration: duration, procent: procent)
+        let telegramUser = TelegramUser(id: request.data["message", "from", "id"]?.int,
+                                        chatId: chatId,
+                                        firstName: userFirstName,
+                                        lastName: request.data["message", "from", "last_name"]?.string,
+                                        username: request.data["message", "from", "username"]?.string,
+                                        languageCode: request.data["message", "from", "language_code"]?.string)
+        let observerBTC = ObserverBTCImpl(telegramUser: telegramUser, procent: procent)
+        socketBTC.observers.append(observerBTC)
+        DispatchQueue
+            .global(qos: .background)
+            .asyncAfter(deadline: .now() + Double(duration * 60)) {
+            socketBTC.observers.remove(observerBTC)
+        }
     }
     
     return try JSON(node: [
@@ -84,16 +99,8 @@ droplet.post("telegram", telegramSecret) { request in
     
 }
 
-/// Run the Droplet.
+try socketBTC.run()
 try droplet.run()
-
-
-
-
-
-
-
-
 
 
 

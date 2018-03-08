@@ -8,8 +8,8 @@
 import Foundation
 
 struct TelegramUser {
-    var id: UInt64
-    var chatId: UInt64
+    var id: Int?
+    var chatId: Int
     var firstName: String?
     var lastName: String?
     var username: String?
