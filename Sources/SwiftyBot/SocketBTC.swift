@@ -19,7 +19,6 @@ class SocketBTC {
             .socket.connect(to: "wss://stream.binance.com:9443/ws/!ticker@arr") { [weak self] webSocet in
                 
                 webSocet.onText = { ws, text in
-                    print("onText")
                     let tikersRaw = text.toJSON as? [[String: Any]] ?? []
                     let tikers = tikersRaw.flatMap({ TickerItem(json: $0) })
                     self?.observers.forEach({ $0.tickersChanged(tikers) })
