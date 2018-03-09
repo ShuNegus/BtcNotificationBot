@@ -34,6 +34,7 @@ import Dispatch
 let droplet: Droplet = try Droplet()
 let socketBTC: SocketBTC = SocketBTC()
 
+
 guard let telegramSecret = droplet.config["app", "telegram", "secret"]?.string else {
     droplet.console.error("Missing secret or token keys!")
     droplet.console.error("Add almost one in Config/secrets/app.json")
