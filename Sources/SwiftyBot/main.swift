@@ -33,7 +33,7 @@ import Dispatch
 
 let droplet: Droplet = try Droplet()
 let socketBTC: SocketBTC = SocketBTC()
-
+var userObservers: [Int: [ObserverBTC]] = [:]
 
 guard let telegramSecret = droplet.config["app", "telegram", "secret"]?.string else {
     droplet.console.error("Missing secret or token keys!")
@@ -95,6 +95,36 @@ droplet.post("telegram", telegramSecret) { request in
                 TelegramMethods().sendMessage("Перестал следить. Время наблюдения вышло.", to: observerBTC.telegramUser.chatId)
                 socketBTC.observers.remove(observerBTC)
         }
+        var observers = userObservers[chatId] ?? []
+        observers.append(observerBTC)
+        userObservers[chatId] = observers
+        
+    case .permanent(let step, let procent):
+        guard step > 0, procent != 0 else {
+            answer = DefaultAnswers().startObserveErrorAnswers()
+            break
+        }
+        answer = DefaultAnswers().permanentObserveAnswers(step: step, procent: procent)
+        let telegramUser = TelegramUser(id: request.data["message", "from", "id"]?.int,
+                                        chatId: chatId,
+                                        firstName: userFirstName,
+                                        lastName: request.data["message", "from", "last_name"]?.string,
+                                        username: request.data["message", "from", "username"]?.string,
+                                        languageCode: request.data["message", "from", "language_code"]?.string)
+        
+        let observerBTCPermanent = ObserverBTCPermanent(telegramUser: telegramUser, procent: procent)
+        socketBTC.observers.append(observerBTCPermanent)
+        
+        var observers = userObservers[chatId] ?? []
+        observers.append(observerBTCPermanent)
+        userObservers[chatId] = observers
+        
+    case .stop:
+        guard let observers = userObservers[chatId] else { break }
+        for observer in observers {
+            socketBTC.observers.remove(observer)
+        }
+        userObservers[chatId] = nil
     }
     
     return try JSON(node: [

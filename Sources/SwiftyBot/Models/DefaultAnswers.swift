@@ -16,6 +16,7 @@ struct DefaultAnswers {
     func helpAnswers() -> String {
         return TelegramCommand.start.commandDescription + "\n" +
                 TelegramCommand.help.commandDescription + "\n" +
+                TelegramCommand.stop.commandDescription + "\n" +
                 TelegramCommand.observe(duration: 0, procent: 0).commandDescription
     }
     
@@ -29,6 +30,15 @@ struct DefaultAnswers {
     
     func startObserveErrorAnswers() -> String {
         return "Не могу начать следить. Проверь исходные данные."
+    }
+    
+    func permanentObserveAnswers(step: Int, procent: Int) -> String {
+        return
+"""
+Буду следить за курсом пока не остановишь.
+Буду сбрасывать эталон сравнения каждые \(step) минут
+Сообщу если курс любой монетки \(procent > 0 ? "увеличится" : "уменьшится") на \(abs(procent))%
+"""
     }
     
 }
