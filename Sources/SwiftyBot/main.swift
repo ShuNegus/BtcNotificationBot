@@ -76,6 +76,10 @@ droplet.post("telegram", telegramSecret) { request in
     case .help:
         answer = DefaultAnswers().helpAnswers()
     case .observe(let duration, let procent):
+        guard duration > 0, procent != 0 else {
+            answer = DefaultAnswers().startObserveErrorAnswers()
+            break
+        }
         answer = DefaultAnswers().startObserveAnswers(duration: duration, procent: procent)
         let telegramUser = TelegramUser(id: request.data["message", "from", "id"]?.int,
                                         chatId: chatId,

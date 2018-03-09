@@ -27,4 +27,8 @@ struct DefaultAnswers {
 """
     }
     
+    func startObserveErrorAnswers() -> String {
+        return "Не могу начать следить. Проверь исходные данные."
+    }
+    
 }
