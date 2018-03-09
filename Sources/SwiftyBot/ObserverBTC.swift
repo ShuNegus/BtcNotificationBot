@@ -25,6 +25,10 @@ class ObserverBTCImpl: ObserverBTC {
         self.procent = procent
     }
     
+    deinit {
+        print("ObserverBTCImpl deinit")
+    }
+    
     // MARK: - ObserverBTC
     
     func tickersChanged(_ tickers: [TickerItem]) {

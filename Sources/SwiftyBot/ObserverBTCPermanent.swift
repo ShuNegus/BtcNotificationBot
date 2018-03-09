@@ -21,6 +21,10 @@ class ObserverBTCPermanent: ObserverBTC {
         self.procent = procent
     }
     
+    deinit {
+        print("ObserverBTCPermanent deinit")
+    }
+    
     // MARK: - ObserverBTC
     
     func tickersChanged(_ tickers: [TickerItem]) {
@@ -32,7 +36,7 @@ class ObserverBTCPermanent: ObserverBTC {
             startTickers = tickers
             symbolsNotified = []
             startObserveTime = nowTime
-            TelegramMethods().sendMessage("Обнулил эталон", to: telegramUser.chatId)
+            print("Обнулил эталон")
         }
     }
     

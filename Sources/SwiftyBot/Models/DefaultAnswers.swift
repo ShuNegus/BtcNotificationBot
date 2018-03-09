@@ -17,6 +17,7 @@ struct DefaultAnswers {
         return TelegramCommand.start.commandDescription + "\n" +
                 TelegramCommand.help.commandDescription + "\n" +
                 TelegramCommand.stop.commandDescription + "\n" +
+                TelegramCommand.permanent(step: 0, procent: 0).commandDescription + "\n" +
                 TelegramCommand.observe(duration: 0, procent: 0).commandDescription
     }
     
