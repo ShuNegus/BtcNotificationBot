@@ -94,6 +94,10 @@ droplet.post("telegram", telegramSecret) { request in
             .asyncAfter(deadline: .now() + Double(duration * 60)) {
                 TelegramMethods().sendMessage("Перестал следить. Время наблюдения вышло.", to: observerBTC.telegramUser.chatId)
                 socketBTC.observers.remove(observerBTC)
+                if var observers = userObservers[chatId] {
+                    observers.remove(observerBTC)
+                    userObservers[chatId] = observers
+                }
         }
         var observers = userObservers[chatId] ?? []
         observers.append(observerBTC)
@@ -121,6 +125,7 @@ droplet.post("telegram", telegramSecret) { request in
         
     case .stop:
         guard let observers = userObservers[chatId] else { break }
+        answer = DefaultAnswers().stopAnswer()
         for observer in observers {
             socketBTC.observers.remove(observer)
         }

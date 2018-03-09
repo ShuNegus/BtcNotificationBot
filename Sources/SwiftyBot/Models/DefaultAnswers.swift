@@ -42,4 +42,8 @@ struct DefaultAnswers {
 """
     }
     
+    func stopAnswer() -> String {
+        return "Не слежу не за чем"
+    }
+    
 }
