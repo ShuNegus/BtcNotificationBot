@@ -23,10 +23,6 @@ class ObserverBTCPermanent: ObserverBTC {
         self.procent = procent
     }
     
-    deinit {
-        print("ObserverBTCPermanent deinit")
-    }
-    
     // MARK: - ObserverBTC
     
     func tickersChanged(_ tickers: [TickerItem]) {
@@ -34,12 +30,10 @@ class ObserverBTCPermanent: ObserverBTC {
         let nowTime = Date()
         if let startTickers = self.startTickers, startObserveTime.addingTimeInterval(TimeInterval(60 * stepDuration)) > nowTime {
             compareStartTickers(startTickers, with: tickers)
-            print("compareStartTickers")
         } else {
             startTickers = tickers
             symbolsNotified = []
             startObserveTime = nowTime
-            print("Обнулил эталон")
         }
     }
     
