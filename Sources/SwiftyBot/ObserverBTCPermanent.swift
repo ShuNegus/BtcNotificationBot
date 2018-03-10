@@ -30,7 +30,7 @@ class ObserverBTCPermanent: ObserverBTC {
     func tickersChanged(_ tickers: [TickerItem]) {
         let tickers = tickers.filter({ $0.symbol.contains("BTC") })
         let nowTime = Date()
-        if let startTickers = self.startTickers, startObserveTime.addingTimeInterval(60 * 5) < nowTime {
+        if let startTickers = self.startTickers, startObserveTime.addingTimeInterval(60 * 5) > nowTime {
             compareStartTickers(startTickers, with: tickers)
             print("compareStartTickers")
         } else {
