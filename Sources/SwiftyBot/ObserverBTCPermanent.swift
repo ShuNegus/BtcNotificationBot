@@ -32,6 +32,7 @@ class ObserverBTCPermanent: ObserverBTC {
         let nowTime = Date()
         if let startTickers = self.startTickers, startObserveTime.addingTimeInterval(60 * 5) < nowTime {
             compareStartTickers(startTickers, with: tickers)
+            print("compareStartTickers")
         } else {
             startTickers = tickers
             symbolsNotified = []
