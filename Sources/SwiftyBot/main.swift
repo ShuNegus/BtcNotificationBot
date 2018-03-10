@@ -116,7 +116,7 @@ droplet.post("telegram", telegramSecret) { request in
                                         username: request.data["message", "from", "username"]?.string,
                                         languageCode: request.data["message", "from", "language_code"]?.string)
         
-        let observerBTCPermanent = ObserverBTCPermanent(telegramUser: telegramUser, procent: procent)
+        let observerBTCPermanent = ObserverBTCPermanent(telegramUser: telegramUser, procent: procent, stepDuration: step)
         socketBTC.observers.append(observerBTCPermanent)
         
         var observers = userObservers[chatId] ?? []

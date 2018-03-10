@@ -11,13 +11,15 @@ class ObserverBTCPermanent: ObserverBTC {
     
     var telegramUser: TelegramUser
     var procent: Int
+    var stepDuration: Int
     
     var startTickers: [TickerItem]?
     var startObserveTime = Date()
     var symbolsNotified: [String] = []
     
-    init(telegramUser: TelegramUser, procent: Int) {
+    init(telegramUser: TelegramUser, procent: Int, stepDuration: Int) {
         self.telegramUser = telegramUser
+        self.stepDuration = stepDuration
         self.procent = procent
     }
     
