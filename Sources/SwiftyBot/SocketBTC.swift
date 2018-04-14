@@ -18,6 +18,10 @@ class SocketBTC {
         try droplet.client
             .socket.connect(to: "wss://stream.binance.com:9443/ws/!ticker@arr") { [weak self] webSocet in
                 
+                self?.observers.forEach({ observer in
+                    observer.socketConected()
+                })
+                
                 webSocet.onText = { ws, text in
                     let tikersRaw = text.toJSON as? [[String: Any]] ?? []
                     let tikers = tikersRaw.flatMap({ TickerItem(json: $0) })
@@ -28,6 +32,7 @@ class SocketBTC {
                     self?.observers.forEach({ observer in
                         observer.socketClose()
                     })
+                    try? self?.run()
                 }
         }
     }

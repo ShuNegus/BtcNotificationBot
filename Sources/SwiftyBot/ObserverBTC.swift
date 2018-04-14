@@ -9,6 +9,7 @@ import Foundation
 
 protocol ObserverBTC {
     func tickersChanged(_ tickers: [TickerItem])
+    func socketConected()
     func socketClose()
 }
 
@@ -36,8 +37,12 @@ class ObserverBTCImpl: ObserverBTC {
         }
     }
     
+    func socketConected() {
+        TelegramMethods().sendMessage("Соединение востановлено 👍", to: telegramUser.chatId)
+    }
+    
     func socketClose() {
-        TelegramMethods().sendMessage("Перестал следить. Сокеты сломались 😱.\nНужно перезапустить сервер.", to: telegramUser.chatId)
+        TelegramMethods().sendMessage("Перестал следить. Сокеты сломались 😱", to: telegramUser.chatId)
     }
     
     private func compareStartTickers(_ startTickers: [TickerItem], with tickers: [TickerItem]) {
