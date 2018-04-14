@@ -14,7 +14,7 @@ class SocketBTC {
     var observers: [ObserverBTC] = []
     
     
-    func run() throws {
+    func run() throws { 
         try droplet.client
             .socket.connect(to: "wss://stream.binance.com:9443/ws/!ticker@arr") { [weak self] webSocet in
                 
