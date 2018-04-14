@@ -26,7 +26,7 @@ class ObserverBTCPermanent: ObserverBTC {
     // MARK: - ObserverBTC
     
     func tickersChanged(_ tickers: [TickerItem]) {
-        let tickers = tickers.filter({ $0.symbol.contains("BTC") })
+        let tickers = tickers.filter({ $0.symbol.contains("BTC") && $0.priceChangePercent <= 5 })
         let nowTime = Date()
         if let startTickers = self.startTickers, startObserveTime.addingTimeInterval(TimeInterval(60 * stepDuration)) > nowTime {
             compareStartTickers(startTickers, with: tickers)
@@ -37,8 +37,12 @@ class ObserverBTCPermanent: ObserverBTC {
         }
     }
     
+    func socketConected() {
+        TelegramMethods().sendMessage("Соединение восстановлено 👍", to: telegramUser.chatId)
+    }
+    
     func socketClose() {
-        TelegramMethods().sendMessage("Перестал следить. Сокеты сломались 😱.\nНужно перезапустить сервер.", to: telegramUser.chatId)
+        TelegramMethods().sendMessage("Перестал следить. Сокеты сломались 😱", to: telegramUser.chatId)
     }
     
     private func compareStartTickers(_ startTickers: [TickerItem], with tickers: [TickerItem]) {
